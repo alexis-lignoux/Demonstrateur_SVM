@@ -1,0 +1,187 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Notice d'utilisation},
+            pdfauthor={Elisa Korn, Imane Salihi et Alexis Lignoux},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Notice d'utilisation}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Elisa Korn, Imane Salihi et Alexis Lignoux}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{Produite le 11 novembre 2019}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{demonstrateur-svm}{%
+\section{Démonstrateur SVM}\label{demonstrateur-svm}}
+
+Le but de ce démonstrateur est d'expliquer, dans un premier temps, le
+principe des Machines à Vecteurs de Support (SVM) et dans un deuxième
+temps, d'appliquer cette méthode sur des données dont la problématique
+est la détection de la fraude. Enfin, nous comparerons enfin cette
+méthode à plusieurs benchmarks.
+
+\hypertarget{plan-de-notre-demonstrateur}{%
+\subsection{Plan de notre démonstrateur
+:}\label{plan-de-notre-demonstrateur}}
+
+Nous commençons, tout d'abord, par une brève introduction sur les
+problèmes de classification illustrés de graphiques.
+
+Les deux onglets suivants expliquent le principe de la méthode SVM dans
+deux cas de figure :
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  Lorsque l'échantillon est linéairement séparable.
+\item
+  Lorsqu'il n'est pas linéairement séparable.
+\end{itemize}
+\end{quote}
+
+Afin de vous présenter la base de données que nous allons utiliser, nous
+vous présentons :
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  Dans l'onglet ``Les données'', une description et un extrait de la
+  table.
+\item
+  Dans l'onglet ``Traitement des données'', la création de nos ensembles
+  d'apprentissage et de test ainsi qu'un rééchantillonnage dû à la
+  faible fréquence d'occurrence de l'événement (évènement rare).
+\item
+  Dans l'onglet ``Visualisation de notre échantillon'', vous pouvez
+  représenter des données dans un espace engendré par 2 ou 3 variables.
+  Celles-ci appartiennent à l'échantillon d'apprentissage après
+  rééchantillonnage.
+\end{itemize}
+\end{quote}
+
+L'onglet ``Estimation'' vous permet de pouvoir créer vous-même les
+échantillons test et apprentissage en fixant la proporition d'invidus
+dans chaque ensemble, puis de procéder au rééchantillonnage, d'estimer
+votre SVM, pour enfin évaluer les capacités prédictives de votre modèle
+sur l'échantillon test. Pour cela vous pourrez faire varier les
+paramètres suivants et ainsi juger de leurs impacts sur les prédictions
+et la qualité du modèle :
+
+\begin{quote}
+\begin{itemize}
+\tightlist
+\item
+  La proportion d'individus dans l'échantillon d'apprentissage
+\item
+  La proportion d'individus fraudeurs dans l'échantillon d'apprentissage
+  après rééchantillonnage
+\item
+  Le type de kernel utilisé (par exemple linéaire ou polynomial)
+\item
+  Le paramètre de coût (le coût des erreurs de classification)
+\item
+  Le paramètre d'ajustement \(\gamma\) (paramètre inutile avec un kernel
+  linéaire)
+\item
+  L'importance d'un individu fraudeur par rapport à un non fraudeur
+  (poids relatif par rapport à un non fraudeur dont le poids vaut 1), ce
+  qui permet de pouvoir contrôler la sensibilité et la spécificité.
+  Augmenter le poids des fraudeurs conduit à augmenter la sensibilité,
+  mais à réduire la spécificité. )
+\end{itemize}
+\end{quote}
+
+Dans l'onglet suivant, nous avons utilisé la validation croisée avec
+comme critère le taux d'erreur, afin de déterminer les valeurs optimales
+des hyper-paramètres et ainsi obtenir le modèle le plus performant.
+
+L'onglet ``Comparaison'' regroupe l'utilisation de diverses méthodes de
+Machine Learning sur notre base de données afin d'évaluer et de comparer
+leurs différents pouvoirs prédictifs avec les SVM. Nous avons fait appel
+à la Régression Logistique, la méthode KNN, le Boosting et le
+RandomForest.
+
+Enfin nous présentons dans le dernier onglet, une brève conclusion sur
+ces comparaisons, avec les forces et les limites de cette méthode.
+
+
+\end{document}
