@@ -26,6 +26,7 @@ r_packages:
   - gdata
   - ROCR
   - class
+  - shinythemes
 
 script:
   - R -f deploy.R

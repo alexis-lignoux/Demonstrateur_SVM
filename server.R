@@ -565,7 +565,7 @@ shinyServer(function(input, output) {
             predknn=prediction(prob,test$Class)
             perfknn=performance(predknn,"tpr","fpr")
             
-            plot(perfsvm,col=1,lwd=2,main="Comparaison des courbes ROC",cex.main=1.5) 
+            plot(perfsvm,col=1,lwd=2,main="Comparaison des courbes ROC",xlab="1-Spécificité",ylab="Sensibilité",cex.main=1.5) 
             plot(perfreglog,col=2,add=TRUE,lwd=2) 
             plot(perfrf,col=3,add=TRUE,lwd=2) 
             plot(perfboost,col=4,add=TRUE,lwd=2) 

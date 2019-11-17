@@ -1,18 +1,20 @@
 library(shiny)
 library(e1071)
 library(plotly)
+library(shinythemes)
 
 options(Encoding="UTF-8")
 donnees=readRDS("templatePDF/creditcard.rds")
 shinyUI(navbarPage(
-    shiny::tags$header("Support Vector Machine",
-                       style="color: black; font-weight: bold",
+    theme=shinytheme("flatly"),
+    shiny::tags$header("Démonstrateur SVM",
+                       style="color: white; font-weight: bold;",
                        tags$link(rel = "stylesheet", type = "text/css", href = "apparence.css")),
     tabPanel(
-        tags$header("Introduction",style="color: black"),
+        tags$header("Avant-propos",style="color: white"),
         tags$p("Nous allons vous présenter au moyen de ce démonstrateur une méthode de classification des données appelée Machine de Vecteurs Support.",class="paragraphe"),
         tags$p("Vous pouvez télécharger la notice de cette introduction aux SVM au format PDF :",style="font-size: 15px; font-style: italic"),
-        downloadButton("dlPDF","Télécharger",class="col1"),
+        downloadButton("dlPDF","Télécharger",class="btn-primary"),
         hr(),
         tags$p("Tout d'abord, définissons la notion de problème de classification.",class="paragraphe"),
         tags$p("Il s'agit tout simplement d'arriver à attribuer une des catégories de la variable réponse à un individu à partir d'un ensemble de prédicteurs. Par exemple,
@@ -21,7 +23,7 @@ shinyUI(navbarPage(
                sa catégorie socio-professionnelle etc...",class="paragraphe"),
         br(),
         br(),
-        tags$p("L'idée générale",style="font-weight: bold; font-size: 20px; font-style: italic; text-align: center"),
+        tags$p("L'idée générale",style="font-weight: bold; font-size: 20px; font-style: italic; text-align: center; color: #2C3E50"),
         br(),
         tags$p("Prenons un exemple simple de problème de classification :",class="paragraphe"),
         tags$p("Nous possèdons deux prédicteurs X et Y pour déterminer si un individu appartient à la classe A ou la classe B. 
@@ -35,7 +37,7 @@ shinyUI(navbarPage(
         br()
     ),
     tabPanel(
-        tags$header("Échantillon linéairement séparable",style="color: black"),
+        tags$header("Échantillon linéairement séparable",style="color: white"),
         tags$p("Dans cette section, nous tâcherons de vous expliquer la méthode SVM.",class="paragraphe"),
         br(),
         tags$p("Les SVM sont une méthode de Machine Learning autrement dit d'apprentissage automatique. Ainsi, au fur et à mesure que le modèle s’entraine sur les données,
@@ -68,11 +70,11 @@ shinyUI(navbarPage(
         )
     ),
     tabPanel(
-        tags$header("Échantillon non-linéairement séparable",style="color: black"),
+        tags$header("Échantillon non-linéairement séparable",style="color: white"),
         tags$p("Précèdemment, nous avons vu le cas simple où les données étudiées peuvent être linéairement séparées.
                Cependant, il existe aussi des échantillons non-linéairement séparables.",class="paragraphe"),
-        tags$p("A) Le soft margin",
-               style="font-weight: bold; font-size: 20px; color: black; text-decoration: underline"),
+        tags$p("Le soft margin",
+               style="font-weight: bold; font-size: 20px; color: #2C3E50; text-decoration: underline"),
         tags$p("Comme nous le voyons avec l'exemple ci-dessous, il n'est parfois pas possible de tracer une droite permettant de diviser linéairement un nuage 
                 de points:",class="paragraphe"),
         plotlyOutput("plot2"),
@@ -96,8 +98,8 @@ shinyUI(navbarPage(
         mainPanel(
             plotOutput("plot3")
         ),
-        tags$p("B) L'astuce KERNEL",
-               style="font-weight: bold; font-size: 20px; color: black; text-decoration: underline"),
+        tags$p("L'astuce KERNEL",
+               style="font-weight: bold; font-size: 20px; color: #2C3E50; text-decoration: underline"),
         tags$p("Il y a cependant des cas de figure où l'utilisation de slack variables ne permet pas d'effectuer une bonne classification. En effet, dans 
                l'exemple précédent, les données étaient \"presque\" linéairement séparables. Or, il existe des cas où les données ne sont pas du tout 
                linéairement séparables, en voici un exemple :",class="paragraphe"),
@@ -127,7 +129,7 @@ shinyUI(navbarPage(
         plotlyOutput("plot9")
     ),
     tabPanel(
-        tags$header("Les données",style="color: black"),
+        tags$header("Les données",style="color: white"),
         tags$p("Considérons maintenant la table de données mise à notre disposition.",class="paragraphe"),
         br(),
         tags$p("Ces données ont été collectées dans le cadre d'une étude menée par Wordline and the Machine Learning Group et l'Université
@@ -145,26 +147,26 @@ shinyUI(navbarPage(
         
     ),
     tabPanel(
-        tags$header("Traitement des données",style="color: black"),
+        tags$header("Traitement des données",style="color: white"),
         tags$p("Une première analyse des fréquences de notre variable de réponse (Fraude), ayant pour modalité 1 si l'individu a connu l'évènement
                et 0 sinon nous adresse le constat suivant : 99.83% des individus de la base de données n'ont pas
                connu l'évènement, et seulement 0.17% sont des fraudeurs :",class="paragraphe"),
-        plotOutput("plot_class"),
+        tags$div(plotOutput("plot_class"),style="text-align: center"),
         tags$p("Nous faisons donc face à une base de données avec des données déséquilibrées, avec un problème d'évènement rare.",class="paragraphe"),
         tags$p("La première étape consiste à partitionner notre échantillon en deux sous-échantillons : un premier d'apprentissage, et un second de test.
                30% des observations initiales serviront à construire l'échantillon test et les 70% restantes constitueront notre échantillon d'apprentissage.
                C'est sur ce dernier que nous allons fixer les hyperparamètres optimaux (gamma, cost...) et estimer notre modèle. Nous pouvons donc voir
                que la proportion d'évenement ou de non-évenement, dans ces deux échantillons est similaire.",class="paragraphe"),
-        plotOutput("plot_class2"),
+        tags$div(plotOutput("plot_class2"),style="text-align:center"),
         tags$p("Faisant face à ce problème de représentabilité des individus fraudeurs, il nous faut procéder à un rééchantillonnage de notre ensemble
                d'apprentissage. Plusieurs solutions s'offrent à nous : l'over-sampling, l'under-sampling ou encore le smote. Nous choisissons
                dans notre cas d'utiliser l'undersampling, de sorte à créer un échantillon avec 80% de non fraudeurs et 20% de fraudeurs. Pour ce faire, nous
                faisons un tirage aléatoire de 1 420 individus sans remises dans les 199 010 de l'ensemble d'apprentissage qui sont non fraudeurs
                (4 x 355 = 1 420). On ajoute à ces 1 420 obervations les 355 individus fraudeurs.",class="paragraphe"),
-        plotOutput("plot_class3")
+        tags$div(plotOutput("plot_class3"),style="text-align: center")
     ),
     tabPanel(
-        tags$header("Visualisation de notre échantillon",style="color: black"),
+        tags$header("Visualisation de notre échantillon",style="color: white"),
         tags$p("Pour une meilleure visualisation des données, nous vous proposons des graphiques 2D et 3D.",class="paragraphe"),
         br(),
         sidebarLayout(
@@ -183,7 +185,7 @@ shinyUI(navbarPage(
         )
     ),
     tabPanel(
-        tags$header("Estimation",style="color: black"),
+        tags$header("Estimation",style="color: white"),
         sidebarLayout(
             sidebarPanel(
                 conditionalPanel(
@@ -192,7 +194,7 @@ shinyUI(navbarPage(
                     hr(),
                     numericInput("seed1","Seed",min=0,max=10,value=1),
                     sliderInput("prop1","Pourcentage d'individus dans l'échantillon d'apprentissage",min=30,max=90,step=1,value=70),
-                    actionButton("generate1","Générer les échantillons")
+                    actionButton("generate1","Générer les échantillons",class="btn-primary")
                 ),
                 conditionalPanel(
                     condition="output.gen1=='TRUE'",
@@ -202,7 +204,7 @@ shinyUI(navbarPage(
                         hr(),
                         numericInput("seed2","Seed",min=0,max=10,value=1),
                         sliderInput("prop2","Taux d'indivus fraudeurs après rééchantillonnage",min=5,max=95,step=1,value=20),
-                        actionButton("generate2","Rééchantillonner")
+                        actionButton("generate2","Rééchantillonner",class="btn-primary")
                     ),
                     conditionalPanel(
                         condition="output.gen2=='TRUE'",
@@ -220,16 +222,16 @@ shinyUI(navbarPage(
                             sliderInput("gamma","Paramètre d'ajustement",min=0,max=1,step=0.01,value=0)
                         ),
                         sliderInput("weight","Poids d'un individu fraudeur par rapport à un non fraudeur (ref=1)",min=0,max=50,step=0.1,value=1),
-                        actionButton("estim","Estimer le modèle"),
+                        actionButton("estim","Estimer le modèle",class="btn-primary"),
                         conditionalPanel(
                             condition="output.est=='TRUE'",
                             hr(),
                             tags$p("Étape n°4 : Évaluer les capacités prédictives du modèle sur l'échantillon test :",style="font-weight: bold"),
-                            actionButton("eval","Evaluer")
+                            actionButton("eval","Evaluer",class="btn-primary")
                         )
                     ),
                     hr(),
-                    actionButton("reinit","Réinitialiser")
+                    actionButton("reinit","Réinitialiser",class="btn-primary")
                 )
             ),
             mainPanel(
@@ -240,7 +242,7 @@ shinyUI(navbarPage(
         )
     ),
     tabPanel(
-      tags$header("Optimisation",style="color: black"),
+      tags$header("Optimisation",style="color: white"),
       tags$p("Nous déterminons par cross-validation les hyper-paramètres optimaux, soient ici : le type de kernel, le paramètre de coût, et gamma,
              le paramètre d'ajustement. Nous utilisons la méthode k-folds avec k=10. (On notera que la valeur du paramètre d'ajustement gamma n'a aucune importance
              lorsque le kernel retenu est linéaire.) Nous obtenons pour les hyper-paramètres les valeurs suivantes :",class="paragraphe"),
@@ -255,16 +257,17 @@ shinyUI(navbarPage(
       tableOutput("rendu3")
     ),
     tabPanel(
-        tags$header("Comparaison",style="color: black"),
+        tags$header("Comparaison",style="color: white"),
         tags$p("Il est intéressant de comparer les résultats obtenus grâce aux SVM avec d'autres méthodes de Machine Learning.",class="paragraphe"),
         br(),
         sidebarPanel(
+            radioButtons(inputId="test",label="Autres benchmarks",choices=c("Régression Logistique"="Reg","KNN"="KNN","Boosting"="Boosting","Random Forest"="Rf")),
             conditionalPanel(
                 condition="output.comp=='FALSE'",
-                actionButton("compar","Lancer la comparaison"),
-                hr()
-            ),
-            radioButtons(inputId="test",label="Autres benchmarks",choices=c("Régression Logistique"="Reg","KNN"="KNN","Boosting"="Boosting","Random Forest"="Rf"))
+                hr(),
+                tags$p("Cliquez ici pour lancer la comparaison :",style="font-weight: bold"),
+                actionButton("compar","Lancer la comparaison",class="btn-primary")
+            )
         ),
         mainPanel(
             conditionalPanel(
@@ -295,7 +298,7 @@ shinyUI(navbarPage(
         ),
         conditionalPanel(
             condition="output.comp=='TRUE'",
-            tags$p("Afin de comparer au mieux les performances obtenues avec ces différents benchmarks, nous avons construit une courbe ROC. En ordonnée, nous avons 
+            tags$p("Afin de comparer au mieux les performances obtenues avec ces différents benchmarks, nous avons construit des courbes ROC. En ordonnée, nous avons 
                    le taux de vrais positifs, qui représente la proportion de fraudeurs correctement identifiés (la sensibilité) en fonction des faux positifs, proportion de non-fraudeurs incorrectement identifiés 
                    (1-spécificité). L'aire sous la courbe est appelée AUC, et plus elle se rapproche de 1, plus la performance du classificateur est bonne. L'indice de gini est compris entre 0 et 1, plus la valeur
                    tend vers 1 et meilleure est la discrimination.",class="paragraphe"),
@@ -308,28 +311,27 @@ shinyUI(navbarPage(
         )
     ),
     tabPanel(
-        tags$header("Conclusion",style="color: black"),
-        tags$p("Les machines à vecteurs de suppport ,en comparaison avec la régression logitique par exemple, possède un certain
+        tags$header("Pros & Cons",style="color: white"),
+        tags$p("Les machines à vecteurs de suppport, en comparaison avec la régression logitique par exemple, possède un certain
                nombre d'avantages et d'inconvénients.",br(),
-               "On notera que dans notre exemple, les capacités prédictives sont similaires pour ces deux méthodes.",class="paragraphe"),
+               "On notera que les capacités prédictives pour ces deux méthodes sont similaires dans notre exemple.",class="paragraphe"),
         br(),
         tags$p("Avantages :",style="font-weight: bold; font-size: 18px"),
         tags$p("- Capacité à faire des prévisions à partir de relativement peu d'observations",br(),
                "- Capacité à traiter des cas non linéaires (astuce kernel)",br(),
                "- Compréhension globale du modèle assez simple (tracer une droite pour séparer deux ensembles de points dans un espace à deux dimensions)",br(),
                "- Gestion simple de l'over-fitting avec les paramètres de coût et d'ajustement (c et gamma)",class="paragraphe",style="margin-left: 40px",br(),
-               "- Capacité à gérer des problèmes de grandes dimension (grand nombre de variables)",br(),
+               "- Capacité à gérer des problèmes de grande dimension (grand nombre de variables)",br(),
                "- Modèle très intéressant en terme de prévision pure"),br(),
         tags$p("Limites :",style="font-weight: bold; font-size: 18px"),
-        tags$p("- Très difficile d'interprêter le modèle, on ne sait pas quelles variables sont créées et utilisées : \"Boîte noire\"",br(),
+        tags$p("- Difficulté à interprêter le modèle, on ne sait pas quelles variables sont créées et utilisées : \"Boîte noire\"",br(),
                "- De ce fait : Impossibilité de faire de l'inférence statistique comme le permettrait la régression logistique",br(),
                class="paragraphe",style="margin-left: 40px"),
         br(),
         tags$p("En règle générale, la performance des SVM, comme toute autre méthode de Machine Learning voit ses performances prédictives affectées par les
-              données considérées, raison pour laquelle il convient de tester plusieurs méthodes et de les comparer pour voir laquelle génère les meilleures prédictions
+              données considérées, raison pour laquelle il convient de tester plusieurs méthodes et de les comparer afin d'identifier celle qui génère les meilleures prédictions
               (sur l'échantillon test). Il convient également pour les SVM, tout comme par exemple le boosting ou le random forest, de fixer les hyper-paramètres
               de façon optimale. Un mauvais choix dans ces hyper-paramètres, comme vous avez sans doute pu le constater dans l'onglet \"Estimation\", peut conduire
               à un modèle très peu performant.",class="paragraphe")
     )
 ))
-
