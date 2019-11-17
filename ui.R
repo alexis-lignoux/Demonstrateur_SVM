@@ -12,7 +12,7 @@ shinyUI(navbarPage(
                        tags$link(rel = "stylesheet", type = "text/css", href = "apparence.css")),
     tabPanel(
         tags$header("Avant-propos",style="color: white"),
-        tags$p("Nous allons vous présenter au moyen de ce démonstrateur une méthode de classification des données appelée Machine de Vecteurs Support.",class="paragraphe"),
+        tags$p("Nous allons vous présenter au moyen de ce démonstrateur une méthode de classification des données appelée Machine à Vecteurs de Support.",class="paragraphe"),
         tags$p("Vous pouvez télécharger la notice de cette introduction aux SVM au format PDF :",style="font-size: 15px; font-style: italic"),
         downloadButton("dlPDF","Télécharger",class="btn-primary"),
         hr(),
@@ -312,7 +312,7 @@ shinyUI(navbarPage(
     ),
     tabPanel(
         tags$header("Pros & Cons",style="color: white"),
-        tags$p("Les machines à vecteurs de suppport, en comparaison avec la régression logitique par exemple, possède un certain
+        tags$p("Les machines à vecteurs de support, en comparaison avec la régression logitique par exemple, possèdent un certain
                nombre d'avantages et d'inconvénients.",br(),
                "On notera que les capacités prédictives pour ces deux méthodes sont similaires dans notre exemple.",class="paragraphe"),
         br(),
